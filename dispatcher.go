@@ -1,6 +1,8 @@
 package gobserve
 
-import "sync"
+import (
+	"sync"
+)
 
 // This structure contains a map of every events registered in the event Dispatcher
 type EventDispatcher[T EventInterface] struct {

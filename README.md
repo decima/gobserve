@@ -3,6 +3,8 @@ Gobserve
 
 A simple event-dispatcher library.
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/decima/gobserve.svg)](https://pkg.go.dev/github.com/decima/gobserve)
+
 ## Install
 
 to add the library to your project simply run :
