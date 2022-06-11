@@ -12,10 +12,6 @@ func (r RacePodium) Name() string {
 	return "podium"
 }
 
-func (r RacePodium) Source() string {
-	return ""
-}
-
 func main() {
 
 	gobserve.SubscribeWithPriority("podium", func(RacePodium) error {
@@ -53,6 +49,6 @@ func main() {
 
 	}, 600)
 
-	gobserve.DispatchPerPriority(RacePodium{})
+	gobserve.DispatchConcurrentPerPriority(RacePodium{})
 
 }

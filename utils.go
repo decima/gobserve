@@ -2,6 +2,7 @@ package gobserve
 
 import "sort"
 
+//sortIntMap converts a int map of any type to a reverse-ordered slice of the same elements.
 func sortIntMap[T any](items map[int]T) []T {
 	listOfKeys := []int{}
 

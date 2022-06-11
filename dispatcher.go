@@ -2,16 +2,19 @@ package gobserve
 
 import "sync"
 
+// This structure contains a map of every events registered in the event Dispatcher
 type EventDispatcher[T EventInterface] struct {
 	subscriptions map[string]map[int][]func(T) error
 }
 
+// NewDispatcher creates a new eventDispatcher for EventInterfaces
 func NewDispatcher() EventDispatcher[EventInterface] {
 	return EventDispatcher[EventInterface]{
 		subscriptions: map[string]map[int][]func(EventInterface) error{},
 	}
 }
 
+//Dispatch sends an event through every concerned event subscribers
 func (e *EventDispatcher[T]) Dispatch(
 	event T,
 	processingStrategy ProcessingStrategy,
