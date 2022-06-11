@@ -8,7 +8,7 @@ func sortIntMap[T any](items map[int]T) []T {
 	for k, _ := range items {
 		listOfKeys = append(listOfKeys, k)
 	}
-	sort.Ints(listOfKeys)
+	sort.Sort(sort.Reverse(sort.IntSlice(listOfKeys)))
 
 	returnValue := []T{}
 

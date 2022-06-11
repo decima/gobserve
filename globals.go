@@ -2,22 +2,24 @@ package gobserve
 
 var globalEventDispatcher = NewDispatcher()
 
-func Dispatch[T EventInterface](name string, event T) {
-	globalEventDispatcher.Dispatch(event, Sequential)
+func Dispatch[T EventInterface](event T, strategy ProcessingStrategy) {
+	globalEventDispatcher.Dispatch(event, strategy)
 }
 
-func DispatchPerPriority[T EventInterface](name string, event T) {
-	globalEventDispatcher.Dispatch(event, PerPriorityConcurrent)
+func DispatchSequential[T EventInterface](event T) {
+	Dispatch(event, Sequential)
 }
 
-func DispatchConcurrent[T EventInterface](name string, event T) {
-	globalEventDispatcher.Dispatch(event, Concurrent)
+func DispatchPerPriority[T EventInterface](event T) {
+	Dispatch(event, PerPriorityConcurrent)
+}
+
+func DispatchConcurrent[T EventInterface](event T) {
+	Dispatch(event, Concurrent)
 }
 
 func Subscribe[T EventInterface](name string, action func(T) error) {
-	globalEventDispatcher.Subscribe(name, func(event EventInterface) error {
-		return action(event.(T))
-	})
+	SubscribeWithPriority(name, action, NormalPriority)
 }
 
 func SubscribeWithPriority[T EventInterface](name string, action func(T) error, priority int) {
