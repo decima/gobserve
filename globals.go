@@ -6,16 +6,21 @@ var globalEventDispatcher = NewDispatcher()
 
 //Subscribe attach an action to an event name given.
 //Internally, this function, will attach the action to a normalPriority (0)
-func Subscribe[T EventInterface](name string, action func(T) error) {
-	SubscribeWithPriority(name, action, NormalPriority)
+func Subscribe[T EventInterface](name string, action func(T) error) Subscriber {
+	return SubscribeWithPriority(name, action, NormalPriority)
 }
 
 //SubscribeWithPriority attach an action to an event name given and weights the priority
 //The higher the priority the first will the action be trigger.
-func SubscribeWithPriority[T EventInterface](name string, action func(T) error, priority int) {
-	globalEventDispatcher.SubscribeWithPriority(name, func(event EventInterface) error {
+func SubscribeWithPriority[T EventInterface](name string, action func(T) error, priority int) Subscriber {
+	return globalEventDispatcher.SubscribeWithPriority(name, func(event EventInterface) error {
 		return action(event.(T))
 	}, priority)
+}
+
+//Unsubscribe removes the subscription previously made.
+func Unsubscribe(sub Subscriber) {
+	globalEventDispatcher.Unsubscribe(sub)
 }
 
 //Dispatch sends an event to every same name events.

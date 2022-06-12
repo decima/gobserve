@@ -4,15 +4,18 @@ import (
 	"sync"
 )
 
+type actionType[T EventInterface] func(T) error
+type subscriptions[T EventInterface] map[string]map[int]map[string]actionType[T]
+
 // This structure contains a map of every events registered in the event Dispatcher
 type EventDispatcher[T EventInterface] struct {
-	subscriptions map[string]map[int][]func(T) error
+	subscriptions[T]
 }
 
 // NewDispatcher creates a new eventDispatcher for EventInterfaces
 func NewDispatcher() EventDispatcher[EventInterface] {
 	return EventDispatcher[EventInterface]{
-		subscriptions: map[string]map[int][]func(EventInterface) error{},
+		subscriptions: subscriptions[EventInterface]{},
 	}
 }
 
